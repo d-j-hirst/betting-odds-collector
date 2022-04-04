@@ -1,0 +1,1 @@
+You'll want to install Chrome (or edit the code to match your preferred browser). (https://cloudbytes.dev/snippets/run-selenium-and-chrome-on-wsl2)[Here] is a guide for WSL2.
