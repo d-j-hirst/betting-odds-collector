@@ -65,7 +65,7 @@ for region, url in urls.items():
             if seat_name in data and party in data[seat_name]:
                 old_price = data[seat_name][party]
                 if old_price != price:
-                    changes.append(f'Seat {seat_name}: new entry {party} at price {price} (changed from {old_price})')
+                    changes.append(f'Seat {seat_name}: {party} now at price {price} (changed from {old_price})')
                     data[seat_name][party] = price
             else:
                 changes.append(f'Seat {seat_name}: new entry {party} at price {price}')
