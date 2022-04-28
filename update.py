@@ -17,14 +17,14 @@ except FileNotFoundError:
 changes = []
 
 urls = {
-    'NSW': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/next-federal-election-nsw-seats-5878289',
-    'VIC': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/next-federal-election-vic-seats-6054105',
-    'QLD': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/next-federal-election-qld-seats-6227453',
-    'WA': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/next-federal-election-wa-seats-6240412',
-    'SA': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/next-federal-election-sa-seats-6240454',
-    'TAS': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/next-federal-election-tas-seats-6225404',
-    'ACT': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/next-federal-election-act-seats-5849944',
-    'NT': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/next-federal-election-nt-seats-6225384',
+    'NSW': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-nsw-seats-6484922',
+    'VIC': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-vic-seats-6495711',
+    'QLD': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-qld-seats-6496304',
+    'WA': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-wa-seats-6496079',
+    'SA': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-sa-seats-6494014',
+    'TAS': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-tas-seats-6484714',
+    'ACT': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-act-seats-6484557',
+    'NT': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-nt-seats-6484664',
 }
 
 options = webdriver.ChromeOptions()
@@ -74,8 +74,10 @@ for region, url in urls.items():
                 data[seat_name][party] = price
 driver.close()
 
-for change in changes:
-    print(change)
+with open('updates.txt', 'w') as f:
+    for change in changes:
+        print(change)
+        f.write(change)
 
 with open('previous.json', 'w') as f:
     json.dump(data, f)
