@@ -1,12 +1,24 @@
 import requests
 import time
 import json
+import environ
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.common.exceptions import NoSuchElementException
+
+import environ
+
+env = environ.Env(
+    DEBUG=(int, 0)
+)
+
+# reading .env file
+environ.Env.read_env('.env')
 
 try:
     with open('previous.json', 'r') as f:
@@ -27,11 +39,16 @@ urls = {
     'NT': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-nt-seats-6484664',
 }
 
-options = webdriver.ChromeOptions()
+options = Options()
 options.add_argument('headless')
+options.add_argument("no-sandbox")
 options.add_argument('window-size=1920x1080')
 options.add_argument("disable-gpu")
-driver = webdriver.Chrome('chromedriver', options=options)
+# This assumes running Linux/wsl2 and you have installed chromedriver
+# according to instructions here:
+# https://cloudbytes.dev/snippets/run-selenium-and-chrome-on-wsl2
+webdriver_service = Service(f"/home/{env.str('USERNAME')}/chromedriver/stable/chromedriver")
+driver = webdriver.Chrome(service=webdriver_service, options=options)
 
 for region, url in urls.items():
     print(f"Loading webpage for {region} ...")
