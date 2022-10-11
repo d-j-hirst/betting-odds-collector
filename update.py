@@ -1,6 +1,7 @@
 import requests
 import time
 import json
+import datetime
 import environ
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -28,15 +29,19 @@ except FileNotFoundError:
 
 changes = []
 
+# urls = {
+#     'NSW': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-nsw-seats-6484922',
+#     'VIC': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-vic-seats-6495711',
+#     'QLD': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-qld-seats-6496304',
+#     'WA': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-wa-seats-6496079',
+#     'SA': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-sa-seats-6494014',
+#     'TAS': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-tas-seats-6484714',
+#     'ACT': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-act-seats-6484557',
+#     'NT': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-nt-seats-6484664',
+# }
+
 urls = {
-    'NSW': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-nsw-seats-6484922',
-    'VIC': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-vic-seats-6495711',
-    'QLD': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-qld-seats-6496304',
-    'WA': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-wa-seats-6496079',
-    'SA': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-sa-seats-6494014',
-    'TAS': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-tas-seats-6484714',
-    'ACT': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-act-seats-6484557',
-    'NT': 'https://www.sportsbet.com.au/betting/politics/australian-federal-politics/electorate-betting-nt-seats-6484664',
+    'all': 'https://www.sportsbet.com.au/betting/politics/vic-politics/victorian-election-electorate-betting-6818921'
 }
 
 options = Options()
@@ -95,6 +100,17 @@ with open('updates.txt', 'w') as f:
     for change in changes:
         print(change)
         f.write(change)
+
+now = datetime.datetime.now()
+
+archive_name = (f'Update Archives/update_archive_{now.year}-{now.month}'
+                f'-{now.day}-{now.hour}-{now.minute}-{now.second}.dat')
+
+with open(archive_name, 'w') as f:
+    for seat_name, seat_data in data.items():
+        f.write(f'#{seat_name}\n')
+        for party_name, party_odds in seat_data.items():
+            f.write(f'{party_name},{party_odds}\n')
 
 with open('previous.json', 'w') as f:
     json.dump(data, f)
